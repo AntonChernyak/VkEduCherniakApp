@@ -5,6 +5,8 @@
     <string name="input_text">Введите текст</string>
     <string name="empty_field_error_message">Поле не должно быть пустым</string>
     <string name="data_not_passed">Данные не переданы</string>
-    <string name="call_phone_number">Позвонить  по номеру</string>
+    <string name="call_phone_number">Позвонить по номеру</string>
     <string name="call_app_not_found">Приложение для звонков отсутствует</string>
+    <string name="share_text">Поделиться текстом</string>
+    <string name="share_via">Поделиться через…</string>
 </resources>

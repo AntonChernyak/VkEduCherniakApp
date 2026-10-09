@@ -94,6 +94,16 @@ fun Greeting(modifier: Modifier = Modifier) {
         }, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.call_phone_number))
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            if (inputText.isBlank()) isError = true
+            else shareText(context, inputText)
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.share_text))
+        }
+
     }
 }
 
@@ -124,4 +134,15 @@ private fun callPhone(context: Context, phoneNumber: String) {
             Toast.LENGTH_SHORT
         ).show()
     }
+}
+
+private fun shareText(context: Context, shareText: String){
+    val shareTextIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, shareText)
+    }
+    val chooser = Intent.createChooser(
+        shareTextIntent, context.getString(R.string.share_via)
+    )
+    context.startActivity(chooser)
 }
