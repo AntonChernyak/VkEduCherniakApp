@@ -1,5 +1,7 @@
 package com.example.vkeducherniakapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,6 +27,16 @@ class SecondActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
+            }
+        }
+    }
+
+    companion object {
+        private const val EXTRA_PASSED_TEXT = "extra_passed_text"
+
+        fun newIntent(context: Context, passedText: String): Intent {
+            return Intent(context, SecondActivity::class.java).apply {
+                putExtra(EXTRA_PASSED_TEXT, passedText)
             }
         }
     }
