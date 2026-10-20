@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppListItem
+import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
 
 @Composable
 fun AppListItem(
@@ -89,13 +90,15 @@ fun AppListItem(
 @Preview
 @Composable
 fun AppListItemPreview() {
-    AppListItem(
-        app = AppListItem(
-            id = 3,
-            title = "VK",
-            category = AppCategory.SOCIAL,
-            imageUrl = "https://images.icon-icons.com/2699/PNG/512/vk_logo_icon_168247.png",
-            description = "Социальная сеть для общения и развлечений"
+    VkEduCherniakAppTheme {
+        AppListItem(
+            app = AppListItem(
+                id = 3,
+                title = "VK",
+                category = AppCategory.SOCIAL,
+                imageUrl = "https://images.icon-icons.com/2699/PNG/512/vk_logo_icon_168247.png",
+                description = "Социальная сеть для общения и развлечений"
+            )
         )
-    )
+    }
 }
