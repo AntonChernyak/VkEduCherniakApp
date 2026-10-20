@@ -1,4 +1,4 @@
-package com.example.vkeducherniakapp.ui.theme
+package com.example.vkeducherniakapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
