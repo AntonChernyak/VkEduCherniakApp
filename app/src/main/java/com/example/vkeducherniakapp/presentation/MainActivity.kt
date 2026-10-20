@@ -7,41 +7,53 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.vkeducherniakapp.data.repository.AppListMockRepository
+import com.example.vkeducherniakapp.domain.model.AppCategory
+import com.example.vkeducherniakapp.domain.model.AppListItem
+import com.example.vkeducherniakapp.presentation.ui.applist.AppListScreen
 import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val apps = AppListMockRepository().getApps()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             VkEduCherniakAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    AppListScreen(apps, modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+@Preview
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
+fun AppListScreenPreview() {
     VkEduCherniakAppTheme {
-        Greeting("Android")
+        AppListScreen(
+            apps = listOf(
+                AppListItem(
+                    id = 1,
+                    title = "Telegram",
+                    category = AppCategory.SOCIAL,
+                    imageUrl = "",
+                    description = "Быстрый и защищенный мессенджер"
+                ),
+                AppListItem(
+                    id = 2,
+                    title = "Яндекс Музыка",
+                    category = AppCategory.MUSIC,
+                    imageUrl = "",
+                    description = "Треки, подкасты и плейлисты"
+                )
+            )
+        )
     }
 }

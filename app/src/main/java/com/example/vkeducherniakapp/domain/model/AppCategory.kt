@@ -13,7 +13,7 @@ enum class AppCategory(val title: String) {
 
     companion object {
         fun findCategory(backendKey: String?): AppCategory {
-            return AppCategory.entries.find { it.title.equals(backendKey, ignoreCase = true) }
+            return AppCategory.entries.find { it.name.equals(backendKey, ignoreCase = true) }
                 ?: OTHER
         }
     }
