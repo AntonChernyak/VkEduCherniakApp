@@ -49,7 +49,7 @@ fun AppListItem(
                 model = app.imageUrl,
                 contentDescription = app.title,
                 modifier = Modifier
-                    .size(56.dp)
+                    .size(64.dp)
                     .clip(RoundedCornerShape(12.dp)),
                 contentScale = ContentScale.Crop
             )
