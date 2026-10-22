@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vkeducherniakapp.R
+import com.example.vkeducherniakapp.data.repository.AppListMockRepository
 import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppDetails
 import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
@@ -60,6 +61,7 @@ fun AppDetailsScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
+
         Spacer(Modifier.height(12.dp))
         ScreenshotsList(
             screenshotUrlList = appDetails.screenshotUrlList,
@@ -91,6 +93,16 @@ fun AppDetailsScreen(
                 .fillMaxWidth()
                 .padding(start = 16.dp),
         )
+        Spacer(Modifier.height(16.dp))
+
+        AppShowcase(
+            apps = AppListMockRepository().getApps(),
+            onAppClick = { app ->
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(Modifier.height(24.dp))
     }
 }
 
