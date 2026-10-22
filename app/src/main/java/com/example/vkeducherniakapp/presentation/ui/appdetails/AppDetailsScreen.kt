@@ -24,10 +24,14 @@ import com.example.vkeducherniakapp.R
 import com.example.vkeducherniakapp.data.repository.AppListMockRepository
 import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppDetails
+import com.example.vkeducherniakapp.domain.model.AppListItem
 import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
 
 @Composable
 fun AppDetailsScreen(
+    appId: Int,
+    onBackClick: () -> Unit,
+    onShowcaseItemClick: (AppListItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val appDetails = remember { getApp() }
@@ -39,11 +43,9 @@ fun AppDetailsScreen(
 
     Column(modifier) {
         Toolbar(
-            onBackClick = {
-                // TODO: Открыть предыдущий экран через Jetpack Navigation
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
-            },
+            onBackClick = onBackClick,
             onShareClick = {
+                // TODO: intent поделиться
                 Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
             },
         )
@@ -98,6 +100,7 @@ fun AppDetailsScreen(
         AppShowcase(
             apps = AppListMockRepository().getApps(),
             onAppClick = { app ->
+                onShowcaseItemClick(app)
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -128,6 +131,9 @@ private fun getApp(): AppDetails = AppDetails(
 private fun Preview() {
     VkEduCherniakAppTheme {
         AppDetailsScreen(
+            appId = 1,
+            onBackClick = {},
+            onShowcaseItemClick = {},
             modifier = Modifier.fillMaxSize(),
         )
     }

@@ -11,7 +11,10 @@ import com.example.vkeducherniakapp.domain.model.AppListItem
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListItem
 
 @Composable
-fun AppListScreen(apps: List<AppListItem>, modifier: Modifier = Modifier) {
+fun AppListScreen(
+    apps: List<AppListItem>, modifier: Modifier = Modifier,
+    onAppClick: (AppListItem) -> Unit
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 8.dp)
