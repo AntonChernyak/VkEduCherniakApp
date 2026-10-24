@@ -7,7 +7,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.vkeducherniakapp.data.repository.AppListMockRepository
 import com.example.vkeducherniakapp.presentation.ui.appdetails.AppDetailsScreen
 import com.example.vkeducherniakapp.presentation.ui.applist.AppListScreen
 import androidx.navigation.compose.rememberNavController
@@ -27,7 +26,6 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
     ) {
         composable(CATALOG_ROUTE) {
             AppListScreen(
-                apps = AppListMockRepository().getApps(),
                 onAppClick = { app ->
                     navController.navigate("$DETAILS_ROUTE/${app.id}")
                 },

@@ -2,7 +2,6 @@ package com.example.vkeducherniakapp.presentation.ui.applist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -14,10 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vkeducherniakapp.R
-import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppListItem
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListContent
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListError
@@ -25,12 +22,10 @@ import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListEv
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListLoader
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListState
 import com.example.vkeducherniakapp.presentation.ui.components.AppToolbar
-import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun AppListScreen(
-    apps: List<AppListItem>,
     onAppClick: (AppListItem) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AppListViewModel = viewModel()
@@ -96,31 +91,5 @@ private fun ObserveEvents(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun AppListScreenPreview() {
-    VkEduCherniakAppTheme {
-        AppListScreen(
-            apps = listOf(
-                AppListItem(
-                    id = 1,
-                    title = "Telegram",
-                    category = AppCategory.SOCIAL,
-                    imageUrl = "",
-                    description = "Быстрый и защищенный мессенджер"
-                ),
-                AppListItem(
-                    id = 2,
-                    title = "Яндекс Музыка",
-                    category = AppCategory.MUSIC,
-                    imageUrl = "",
-                    description = "Треки, подкасты и плейлисты"
-                )
-            ),
-            onAppClick = {}
-        )
     }
 }
