@@ -6,7 +6,7 @@ import com.example.vkeducherniakapp.domain.model.AppListItem
 @Immutable
 sealed interface AppListState {
     data object Loading : AppListState
-    data class Error(val error: AppListError) : AppListState
+    data class Error(val error: AppListErrorState) : AppListState
     data class Content(
         val apps: List<AppListItem>
     ) : AppListState

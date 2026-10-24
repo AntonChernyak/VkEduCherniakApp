@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vkeducherniakapp.data.repository.AppListMockRepository
-import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListError
+import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListErrorState
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListEvent
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListState
 import kotlinx.coroutines.CancellationException
@@ -42,12 +42,12 @@ class AppListViewModel : ViewModel() {
             } catch (e: CancellationException) {
                 throw e
             } catch (e: IOException) {
-                _state.value = AppListState.Error(AppListError.Network)
+                _state.value = AppListState.Error(AppListErrorState.Network)
             } //catch (e: HttpException) {
             //  _state.value = AppListState.Error(AppError.Server)
             //  }
             catch (e: Exception) {
-                _state.value = AppListState.Error(AppListError.Unknown(e.localizedMessage))
+                _state.value = AppListState.Error(AppListErrorState.Unknown(e.localizedMessage))
                 Log.e(APP_LIST_VIEW_MODEL_LOG_TAG, "Failed to load apps: ${e.message}", e)
             }
         }

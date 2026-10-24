@@ -18,7 +18,7 @@ import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppToolbar() {
+fun AppToolbar(modifier: Modifier = Modifier) {
     TopAppBar(
         title = { Text("Каталог приложений", color = MaterialTheme.colorScheme.onPrimary) },
         navigationIcon = {
@@ -31,7 +31,8 @@ fun AppToolbar() {
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
-        )
+        ),
+        modifier = modifier
     )
 }
 
