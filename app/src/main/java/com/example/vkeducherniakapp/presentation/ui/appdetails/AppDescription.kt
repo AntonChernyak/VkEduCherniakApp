@@ -50,7 +50,7 @@ fun AppDescription(
 private fun PreviewShort() {
     VkEduCherniakAppTheme {
         AppDescription(
-            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
+            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и сразите мастера подземелья!",
             onReadMoreClick = {},
             collapsed = false,
         )
@@ -62,7 +62,7 @@ private fun PreviewShort() {
 private fun PreviewCollapsed() {
     VkEduCherniakAppTheme {
         AppDescription(
-            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
+            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и сразите мастера подземелья!",
             onReadMoreClick = {},
             collapsed = true,
         )
