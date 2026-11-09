@@ -1,6 +1,7 @@
 package com.example.vkeducherniakapp.domain.model
 
 data class AppDetails(
+    val id: String,
     val name: String,
     val developer: String,
     val category: AppCategory,
