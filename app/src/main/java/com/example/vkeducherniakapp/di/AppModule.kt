@@ -1,6 +1,9 @@
 package com.example.vkeducherniakapp.di
 
 import android.app.Application
+import com.example.vkeducherniakapp.data.mapper.AppListItemMapper
+import com.example.vkeducherniakapp.data.repository.AppListMockRepository
+import com.example.vkeducherniakapp.domain.repository.AppRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +15,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideappListRepository(mapper: AppListItemMapper): AppRepository {
+        return AppListMockRepository(mapper)
+    }
 /*    @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -37,7 +45,7 @@ object AppModule {
 //        return AppDetailsRepositoryImpl(appApi)
 //    }
 
-    @Provides
+/*    @Provides
     @Singleton
     fun provideGetAppDetailsUseCase(repository: AppDetailsRepository): GetAppDetailsUseCase {
         return GetAppDetailsUseCase(repository)
@@ -100,5 +108,5 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGetSimilarAppsUseCase(repository: SimilarAppsRepository): GetSimilarAppsUseCase =
-        GetSimilarAppsUseCase(repository)
+        GetSimilarAppsUseCase(repository)*/
 }

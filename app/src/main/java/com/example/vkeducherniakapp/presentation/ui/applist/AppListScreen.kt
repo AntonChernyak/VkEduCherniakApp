@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.vkeducherniakapp.R
 import com.example.vkeducherniakapp.domain.model.AppListItem
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListContent
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.Flow
 fun AppListScreen(
     onAppClick: (AppListItem) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AppListViewModel = viewModel()
+    viewModel: AppListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val events = viewModel.events

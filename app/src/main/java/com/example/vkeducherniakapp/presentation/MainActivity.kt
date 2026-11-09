@@ -10,7 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.vkeducherniakapp.presentation.ui.navigation.AppNavGraph
 import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,8 +3,9 @@ package com.example.vkeducherniakapp.data.mapper
 import com.example.vkeducherniakapp.data.dto.AppListItemDto
 import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppListItem
+import javax.inject.Inject
 
-class AppListItemMapper {
+class AppListItemMapper @Inject constructor() {
 
         fun toDomain(dto: AppListItemDto): AppListItem {
             return AppListItem(
