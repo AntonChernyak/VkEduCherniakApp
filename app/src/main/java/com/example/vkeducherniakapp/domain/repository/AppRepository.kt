@@ -4,6 +4,5 @@ import com.example.vkeducherniakapp.domain.model.AppListItem
 
 
 interface AppRepository {
-    fun getApps(): List<AppListItem>
-    fun deleteApp(appId: Int)
+    suspend fun getApps(): List<AppListItem>
 }

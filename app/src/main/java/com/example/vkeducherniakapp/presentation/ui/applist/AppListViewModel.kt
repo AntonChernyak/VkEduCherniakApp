@@ -3,7 +3,7 @@ package com.example.vkeducherniakapp.presentation.ui.applist
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vkeducherniakapp.data.repository.AppListMockRepository
+import com.example.vkeducherniakapp.data.repository.AppListRepository
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListErrorState
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListEvent
 import com.example.vkeducherniakapp.presentation.ui.applist.components.AppListState
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppListViewModel @Inject constructor(
-    private val repository: AppListMockRepository
+    private val repository: AppListRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AppListState>(AppListState.Loading)

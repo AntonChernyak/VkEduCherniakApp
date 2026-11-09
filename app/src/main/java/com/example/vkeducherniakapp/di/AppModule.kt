@@ -1,10 +1,7 @@
 package com.example.vkeducherniakapp.di
 
-import com.example.vkeducherniakapp.data.mapper.AppListItemMapper
-import com.example.vkeducherniakapp.data.repository.AppListMockRepository
 import com.example.vkeducherniakapp.data.retrofit.AppApi
 import com.example.vkeducherniakapp.data.util.Constants
-import com.example.vkeducherniakapp.domain.repository.AppRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,11 +16,6 @@ import kotlin.jvm.java
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Provides
-    fun provideappListRepository(mapper: AppListItemMapper): AppRepository {
-        return AppListMockRepository(mapper)
-    }
 
     @Provides
     @Singleton

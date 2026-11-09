@@ -1,6 +1,7 @@
 package com.example.vkeducherniakapp.data.repository
 
-// Представим, что этот класс ходит в сеть.
+import com.example.vkeducherniakapp.data.dto.SimilarAppDto
+
 class SimilarAppsApi {
     suspend fun getSimilarApps(): List<SimilarAppDto> = listOf(
         SimilarAppDto(

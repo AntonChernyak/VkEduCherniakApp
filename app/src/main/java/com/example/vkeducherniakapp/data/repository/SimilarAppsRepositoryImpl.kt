@@ -1,7 +1,8 @@
 package com.example.vkeducherniakapp.data.repository
 
-import io.mmaltsev.vkeducation.domain.appdetails.SimilarApp
-import io.mmaltsev.vkeducation.domain.appdetails.SimilarAppsRepository
+import com.example.vkeducherniakapp.data.mapper.SimilarAppMapper
+import com.example.vkeducherniakapp.domain.model.SimilarApp
+import com.example.vkeducherniakapp.domain.repository.SimilarAppsRepository
 import javax.inject.Inject
 
 class SimilarAppsRepositoryImpl @Inject constructor(
