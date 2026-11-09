@@ -1,7 +1,7 @@
 package com.example.vkeducherniakapp.domain.model
 
 data class AppListItem(
-    val id: Int,
+    val id: String,
     val title: String,
     val description: String,
     val imageUrl: String,
