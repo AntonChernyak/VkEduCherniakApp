@@ -23,5 +23,7 @@
     <string name="showcase">Витрина</string>
 
     <string name="this_is_toolbar">ДА! Это тулбар, детка!</string>
+    <string name="cancel">Отменить (%1$d%)</string>
+    <string name="installed">Установлено</string>
 
 </resources>

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,12 +22,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.vkeducherniakapp.R
-import com.example.vkeducherniakapp.data.repository.AppListRepository
 import com.example.vkeducherniakapp.domain.model.AppCategory
 import com.example.vkeducherniakapp.domain.model.AppDetails
 import com.example.vkeducherniakapp.domain.model.AppListItem
 import com.example.vkeducherniakapp.presentation.ui.theme.VkEduCherniakAppTheme
+import io.mmaltsev.vkeducation.presentation.appdetails.AppDetailsEvent
 
 @Composable
 fun AppDetailsScreen(
@@ -33,7 +36,9 @@ fun AppDetailsScreen(
     onBackClick: () -> Unit,
     onShowcaseItemClick: (AppListItem) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: AppDetailsViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
     val appDetails = remember { getApp() }
 
     val context = LocalContext.current
@@ -41,75 +46,101 @@ fun AppDetailsScreen(
 
     var descriptionCollapsed by remember { mutableStateOf(false) }
 
-    Column(modifier) {
-        Toolbar(
-            onBackClick = onBackClick,
-            onShareClick = {
-                // TODO: intent поделиться
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
-            },
-        )
-        Spacer(Modifier.height(8.dp))
-        AppDetailsHeader(
-            appDetails = appDetails,
-            modifier = Modifier.padding(horizontal = 16.dp),
-        )
-        Spacer(Modifier.height(16.dp))
-        InstallButton(
-            onClick = {
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is AppDetailsEvent.UnderDevelopment -> {
+                    Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
-        Spacer(Modifier.height(12.dp))
-        ScreenshotsList(
-            screenshotUrlList = appDetails.screenshotUrlList,
-            contentPadding = PaddingValues(horizontal = 16.dp),
-        )
-        Spacer(Modifier.height(12.dp))
-        AppDescription(
-            description = appDetails.description,
-            collapsed = descriptionCollapsed,
-            onReadMoreClick = {
-                descriptionCollapsed = true
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-        )
-        Spacer(Modifier.height(12.dp))
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            color = MaterialTheme.colorScheme.outlineVariant,
-        )
-        Spacer(Modifier.height(12.dp))
-        Developer(
-            name = appDetails.developer,
-            onClick = {
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp),
-        )
-        Spacer(Modifier.height(16.dp))
+    when (val currentState = state) {
+        is AppDetailsState.Loading -> {
+            AppDetailsLoading(modifier = modifier.fillMaxSize())
+        }
+        is AppDetailsState.Error -> {
+            AppDetailsError(
+                onRefreshClick = { viewModel.getAppDetails() },
+                modifier = modifier.fillMaxSize()
+            )
+        }
+        is AppDetailsState.Content -> {
+            val appDetails = currentState.appDetails
 
-        AppShowcase(
-            apps = AppListRepository().getApps(),
-            onAppClick = { app ->
-                onShowcaseItemClick(app)
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
+            // --- ВСЯ ВАША ВЁРСТКА ТЕПЕРЬ ЗДЕСЬ ---
+            Column(modifier) {
+                Toolbar(
+                    onBackClick = onBackClick,
+                    onShareClick = {
+                        viewModel.showUnderDevelopmentMessage()
+                    },
+                )
+                Spacer(Modifier.height(8.dp))
+                AppDetailsHeader(
+                    appDetails = appDetails,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                )
+                Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(24.dp))
+                InstallButton(
+                    installState = currentState.installState,
+                    onClick = { viewModel.onInstallClick() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
+
+                Spacer(Modifier.height(12.dp))
+                ScreenshotsList(
+                    screenshotUrlList = appDetails.screenshotUrlList,
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                )
+                Spacer(Modifier.height(12.dp))
+                AppDescription(
+                    description = appDetails.description,
+                    collapsed = currentState.descriptionCollapsed,
+                    onReadMoreClick = {
+                        viewModel.collapseDescription()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                )
+                Spacer(Modifier.height(12.dp))
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                )
+                Spacer(Modifier.height(12.dp))
+                Developer(
+                    name = appDetails.developer,
+                    onClick = {
+                        viewModel.showUnderDevelopmentMessage()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp),
+                )
+                Spacer(Modifier.height(16.dp))
+
+                AppShowcase(
+                    apps = currentState.similarApps,
+                    onAppClick = { app ->
+                        onShowcaseItemClick(app)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(Modifier.height(24.dp))
+            }
+        }
     }
 }
 
 private fun getApp(): AppDetails = AppDetails(
+    id = "111",
     name = "Гильдия Героев: Экшен ММО РПГ",
     developer = "VK Play",
     category = AppCategory.GAMES,
