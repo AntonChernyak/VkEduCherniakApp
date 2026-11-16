@@ -3,18 +3,22 @@ package com.example.vkeducherniakapp.presentation.ui.appdetails
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vkeducherniakapp.domain.usecase.GetAppDetailsUseCase
+import com.example.vkeducherniakapp.domain.usecase.GetSimilarAppsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.mmaltsev.vkeducation.presentation.appdetails.AppDetailsEvent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class AppDetailsViewModel @Inject constructor(
@@ -29,6 +33,8 @@ class AppDetailsViewModel @Inject constructor(
     val events = _events.receiveAsFlow()
 
     private var loadingJob: Job? = null
+
+    private var installJob: Job? = null
 
     init {
         getAppDetails()
@@ -48,6 +54,48 @@ class AppDetailsViewModel @Inject constructor(
                 currentState
             }
         }
+    }
+
+    fun onInstallClick() {
+        val current = _state.value as? AppDetailsState.Content ?: return
+
+        when (current.installState) {
+            is InstallState.Installing -> {
+                installJob?.cancel()
+                installJob = null
+                _state.update { state ->
+                    if (state is AppDetailsState.Content) {
+                        state.copy(installState = InstallState.NotInstalled)
+                    } else state
+                }
+            }
+            is InstallState.NotInstalled -> {
+                installJob = viewModelScope.launch {
+                    emulateInstall()
+                }
+            }
+            is InstallState.Installed -> {
+            }
+        }
+    }
+
+    private suspend fun emulateInstall() {
+        for (progress in 0..100 step 5) {
+            delay(150.milliseconds)
+
+            _state.update { state ->
+                if (state is AppDetailsState.Content) {
+                    state.copy(installState = InstallState.Installing(progress))
+                } else state
+            }
+        }
+
+        _state.update { state ->
+            if (state is AppDetailsState.Content) {
+                state.copy(installState = InstallState.Installed)
+            } else state
+        }
+        installJob = null
     }
 
     fun getAppDetails() {
