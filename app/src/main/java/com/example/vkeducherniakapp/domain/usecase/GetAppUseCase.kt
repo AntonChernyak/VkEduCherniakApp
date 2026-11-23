@@ -1,6 +1,7 @@
 package com.example.vkeducherniakapp.domain.usecase
 
 import com.example.vkeducherniakapp.domain.model.AppDetails
+import com.example.vkeducherniakapp.domain.repository.AppDetailsRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAppDetailsUseCase(
