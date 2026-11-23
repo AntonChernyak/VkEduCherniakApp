@@ -42,14 +42,22 @@ class AppListViewModel @Inject constructor(
             try {
                 val apps = repository.getApps()
                 _state.value = AppListState.Content(apps = apps)
+
+                val ids = apps.map { it.id }
+
+                repository.loadRatingsSequentially(ids)
+                val parallelRatings = repository.loadRatingsInParallel(ids)
+
+                val updatedApps = apps.map { app ->
+                    app.copy(rating = parallelRatings[app.id])
+                }
+                _state.value = AppListState.Content(apps = updatedApps)
+
             } catch (e: CancellationException) {
                 throw e
             } catch (e: IOException) {
                 _state.value = AppListState.Error(AppListErrorState.Network)
-            } //catch (e: HttpException) {
-            //  _state.value = AppListState.Error(AppError.Server)
-            //  }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 _state.value = AppListState.Error(AppListErrorState.Unknown(e.localizedMessage))
                 Log.e(APP_LIST_VIEW_MODEL_LOG_TAG, "Failed to load apps: ${e.message}", e)
             }

@@ -45,14 +45,14 @@ fun AppListScreenPreview() {
         AppListContent(
             apps = listOf(
                 AppListItem(
-                    id = 1,
+                    id = "1",
                     title = "Telegram",
                     category = AppCategory.SOCIAL,
                     imageUrl = "",
                     description = "Быстрый и защищенный мессенджер"
                 ),
                 AppListItem(
-                    id = 2,
+                    id = "2",
                     title = "Яндекс Музыка",
                     category = AppCategory.MUSIC,
                     imageUrl = "",
