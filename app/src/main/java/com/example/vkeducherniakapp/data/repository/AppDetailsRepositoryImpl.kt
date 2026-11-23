@@ -1,8 +1,12 @@
 package com.example.vkeducherniakapp.data.repository
 
 
+import com.example.vkeducherniakapp.data.db.AppDetailsDao
+import com.example.vkeducherniakapp.data.db.entity.AppDetailsEntityMapper
 import com.example.vkeducherniakapp.data.mapper.AppDetailsMapper
+import com.example.vkeducherniakapp.data.retrofit.AppApi
 import com.example.vkeducherniakapp.domain.model.AppDetails
+import com.example.vkeducherniakapp.domain.repository.AppDetailsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
