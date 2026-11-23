@@ -1,9 +1,10 @@
 package com.example.vkeducherniakapp.domain.model
 
 data class AppListItem(
-    val id: Int,
+    val id: String,
     val title: String,
     val description: String,
     val imageUrl: String,
-    val category: AppCategory
+    val category: AppCategory,
+    val rating: Float? = null,
 )
